@@ -1,0 +1,75 @@
+---
+title: 服务商配置
+description: 配置各个 AI 服务商的 Cookie 和 Token
+---
+
+## 概述
+
+MultiWebLLM 通过浏览器 Cookie 或 API Token 连接各个 AI 服务商。你需要从浏览器中获取对应的认证信息。
+
+## 通用获取方法
+
+### 通过浏览器 DevTools 获取 Cookie
+
+1. 打开对应 AI 服务的网页（如 chat.openai.com）
+2. 按 `F12` 打开开发者工具
+3. 切换到 **Application**（应用）标签页
+4. 在左侧栏找到 **Cookies** > 对应域名
+5. 复制需要的 Cookie 值
+
+## 各服务商配置
+
+### ChatGPT
+
+- **地址**: chat.openai.com
+- **所需 Cookie**: `__Secure-next-auth.session-token`
+- **支持模型**: gpt-4o, gpt-4o-mini, o1, o1-mini, o3-mini
+
+### Claude
+
+- **地址**: claude.ai
+- **所需 Cookie**: `sessionKey`
+- **支持模型**: claude-sonnet-4-20250514, claude-3.5-haiku
+
+### Gemini
+
+- **地址**: gemini.google.com
+- **所需 Cookie**: `__Secure-1PSID`, `__Secure-1PSIDTS`
+- **支持模型**: gemini-2.5-pro, gemini-2.0-flash
+
+### Grok
+
+- **地址**: x.com/grok
+- **所需 Cookie**: `auth_token`, `ct0`
+- **支持模型**: grok-3, grok-3-mini
+
+### DeepSeek
+
+- **地址**: chat.deepseek.com
+- **所需 Cookie**: `ds_session`
+- **支持模型**: deepseek-chat, deepseek-reasoner
+
+### Kimi
+
+- **地址**: kimi.moonshot.cn
+- **所需 Cookie**: `access_token` 或 `refresh_token`
+- **支持模型**: kimi-chat
+
+### Minimax
+
+- **地址**: hailuoai.com
+- **所需 Cookie**: `token`
+- **支持模型**: minimax-chat
+
+### 豆包
+
+- **地址**: doubao.com
+- **所需 Cookie**: `session_id`
+- **支持模型**: doubao-chat
+
+## 注意事项
+
+- Cookie 有过期时间，过期后需要重新获取
+- 建议定期检查服务商连接状态
+- 部分服务商可能会更新认证方式，请关注项目更新
+- 管理后台提供「测试连接」功能，配置后请务必测试

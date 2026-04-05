@@ -1,0 +1,90 @@
+---
+title: 快速开始
+description: 5 分钟完成 MultiWebLLM 安装部署
+---
+
+## 环境要求
+
+- **Docker** 和 **Docker Compose** (v2+)
+- 2GB+ 内存（建议添加 swap）
+- 域名（可选，用于 HTTPS 访问）
+
+## 安装步骤
+
+### 1. 克隆项目
+
+```bash
+git clone https://github.com/gentpan/multiwebllm.git
+cd multiwebllm
+```
+
+### 2. 配置环境变量
+
+```bash
+cp .env.example .env
+```
+
+编辑 `.env` 文件，设置关键配置：
+
+```ini
+# 管理后台密码
+ADMIN_PASSWORD=your-secure-password
+
+# 服务端口
+PORT=3000
+
+# 数据库路径
+DB_PATH=./data/db.sqlite
+```
+
+### 3. 启动服务
+
+```bash
+docker compose up -d
+```
+
+等待容器启动完成后，访问管理后台：
+
+```
+http://localhost:3000
+```
+
+### 4. 配置服务商
+
+进入管理后台后：
+
+1. 进入「服务商管理」页面
+2. 选择要启用的 AI 服务商（如 ChatGPT、Claude 等）
+3. 填入对应的 Cookie 或 Token（参考 [服务商配置](/docs/providers)）
+4. 点击「测试连接」确认配置正确
+
+### 5. 创建 API Key
+
+1. 进入「密钥管理」页面
+2. 点击「新建密钥」
+3. 设置名称、配额限制
+4. 复制生成的 API Key
+
+## 第一次 API 调用
+
+使用生成的 API Key 发起请求：
+
+```bash
+curl http://localhost:3000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-api-key" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [
+      {"role": "user", "content": "Hello!"}
+    ]
+  }'
+```
+
+如果一切正常，你将收到与 OpenAI API 格式一致的 JSON 响应。
+
+## 下一步
+
+- [配置更多服务商](/docs/providers)
+- [查看 API 文档](/docs/api-reference)
+- [部署到生产环境](/docs/deployment)

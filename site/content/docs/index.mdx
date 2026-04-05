@@ -1,0 +1,24 @@
+---
+title: MultiWebLLM 文档
+description: 将网页 AI 订阅转为 OpenAI 兼容 API 的统一管理平台
+---
+
+## 什么是 MultiWebLLM？
+
+MultiWebLLM 是一个自托管的 AI 网关服务，将你已有的 ChatGPT、Claude、Gemini、Grok、DeepSeek、Kimi、Minimax、豆包等网页订阅转为标准的 OpenAI 兼容 API。
+
+通过 MultiWebLLM，你可以：
+
+- **统一 API 接口** - 使用标准 `/v1/chat/completions` 接口调用所有服务商
+- **多密钥分发** - 为不同应用分配独立的 API Key，各自独立配额
+- **用量统计** - 实时监控请求数、Token 消耗、延迟和错误率
+- **配额管理** - 本地计数限流 + 远程额度抓取，避免订阅浪费
+- **Docker 部署** - `docker compose up` 一键启动
+
+## 快速导航
+
+- [快速开始](/docs/getting-started) - 5 分钟完成安装部署
+- [服务商配置](/docs/providers) - 配置各个 AI 服务商
+- [API 参考](/docs/api-reference) - 接口文档和示例
+- [部署指南](/docs/deployment) - 生产环境部署配置
+- [更新日志](/docs/changelog) - 版本更新记录

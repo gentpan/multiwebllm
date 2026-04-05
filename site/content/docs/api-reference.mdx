@@ -1,0 +1,174 @@
+---
+title: API 参考
+description: MultiWebLLM OpenAI 兼容 API 接口文档
+---
+
+## 认证
+
+所有 API 请求需要在 Header 中携带 API Key：
+
+```
+Authorization: Bearer your-api-key
+```
+
+API Key 在管理后台的「密钥管理」中创建。
+
+## POST /v1/chat/completions
+
+创建聊天补全。
+
+### 请求
+
+```bash
+curl http://your-server:3000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-api-key" \
+  -d '{
+    "model": "gpt-4o",
+    "messages": [
+      {"role": "system", "content": "You are a helpful assistant."},
+      {"role": "user", "content": "Hello!"}
+    ],
+    "stream": false
+  }'
+```
+
+### 请求参数
+
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `model` | string | 是 | 模型名称，如 `gpt-4o`、`claude-sonnet-4-20250514` |
+| `messages` | array | 是 | 消息数组 |
+| `stream` | boolean | 否 | 是否流式输出，默认 `false` |
+| `temperature` | number | 否 | 采样温度，0-2 |
+| `max_tokens` | integer | 否 | 最大生成 Token 数 |
+
+### 消息格式
+
+```json
+{
+  "role": "user",
+  "content": "Hello!"
+}
+```
+
+`role` 可选值：`system`、`user`、`assistant`
+
+### 响应
+
+```json
+{
+  "id": "chatcmpl-xxx",
+  "object": "chat.completion",
+  "created": 1234567890,
+  "model": "gpt-4o",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "Hello! How can I help you today?"
+      },
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 10,
+    "completion_tokens": 12,
+    "total_tokens": 22
+  }
+}
+```
+
+### 流式响应
+
+当 `stream: true` 时，返回 Server-Sent Events (SSE) 格式：
+
+```
+data: {"id":"chatcmpl-xxx","choices":[{"delta":{"content":"Hello"},"index":0}]}
+
+data: {"id":"chatcmpl-xxx","choices":[{"delta":{"content":"!"},"index":0}]}
+
+data: [DONE]
+```
+
+## GET /v1/models
+
+列出当前可用的模型。
+
+### 请求
+
+```bash
+curl http://your-server:3000/v1/models \
+  -H "Authorization: Bearer your-api-key"
+```
+
+### 响应
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "gpt-4o",
+      "object": "model",
+      "owned_by": "chatgpt"
+    },
+    {
+      "id": "claude-sonnet-4-20250514",
+      "object": "model",
+      "owned_by": "claude"
+    }
+  ]
+}
+```
+
+## POST /v1/images/generations
+
+生成图片（需服务商支持）。
+
+### 请求
+
+```bash
+curl http://your-server:3000/v1/images/generations \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer your-api-key" \
+  -d '{
+    "model": "gpt-4o",
+    "prompt": "A cute cat sitting on a desk",
+    "n": 1,
+    "size": "1024x1024"
+  }'
+```
+
+### 请求参数
+
+| 参数 | 类型 | 必填 | 说明 |
+|------|------|------|------|
+| `model` | string | 是 | 模型名称 |
+| `prompt` | string | 是 | 图片描述 |
+| `n` | integer | 否 | 生成图片数量，默认 1 |
+| `size` | string | 否 | 图片尺寸 |
+
+### 响应
+
+```json
+{
+  "created": 1234567890,
+  "data": [
+    {
+      "url": "https://..."
+    }
+  ]
+}
+```
+
+## 错误码
+
+| 状态码 | 说明 |
+|--------|------|
+| 400 | 请求参数错误 |
+| 401 | API Key 无效或过期 |
+| 429 | 请求频率超限或配额已用完 |
+| 500 | 服务器内部错误 |
+| 502 | 上游服务商请求失败 |

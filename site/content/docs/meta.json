@@ -1,0 +1,14 @@
+{
+  "title": "文档",
+  "pages": [
+    "---快速上手---",
+    "index",
+    "getting-started",
+    "---配置---",
+    "providers",
+    "---参考---",
+    "api-reference",
+    "deployment",
+    "changelog"
+  ]
+}

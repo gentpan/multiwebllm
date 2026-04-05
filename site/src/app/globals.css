@@ -1,0 +1,47 @@
+@import "tailwindcss";
+@import "fumadocs-ui/style.css";
+
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --color-fd-primary: 37 99 235;
+  --radius: 0px;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --radius-lg: 0px;
+  --radius-md: 0px;
+  --radius-sm: 0px;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+/* Docs sidebar: fixed, never moves */
+aside[data-fd-sidebar] {
+  position: fixed !important;
+  top: 4rem !important;
+  bottom: 0 !important;
+  overflow: hidden !important;
+}
+
+aside[data-fd-sidebar] > div {
+  overflow: hidden !important;
+  height: auto !important;
+  max-height: none !important;
+}
+
+/* Hide ALL theme toggle buttons everywhere */
+[data-theme-toggle],
+button[aria-label="Toggle Theme"],
+[data-fd-theme-toggle],
+.flex.text-fd-muted-foreground.items-center.border.bg-fd-secondary\/50 {
+  display: none !important;
+}
